@@ -7,7 +7,67 @@ const Navbar = () => {
   const context = useContext(ShoppingCartContext)
   const activeStyle = 'underline underline-offset-4'
 
-  return (
+  // Sign Out
+  const signOut = localStorage.getItem('sign-out')
+  const parsedSignOut = JSON.parse(signOut) // Parse the sign-out value from localStorage
+  const isUserSignedOut = context.signOut || parsedSignOut // Use context's signOut or parsed value from localStorage
+
+  const handleSignOut = () => { 
+    const stringifiedSignOut = JSON.stringify(true)
+    localStorage.setItem('sign-out', stringifiedSignOut)
+    context.setSignOut(true) // Update signOut state in context
+  }
+
+  const renderView = () => {
+     if (isUserSignedOut) {
+      return ( 
+        <li>
+          <NavLink
+            to='/sing-in'
+            className={({ isActive }) => isActive ? activeStyle : undefined}
+            onClick={() => handleSignOut()}>
+            Sign In
+          </NavLink>
+        </li>
+      )
+  } else {
+    return (
+      <>
+        <li className='text-black/60'>
+          camilin@platzi.com
+        </li>
+        <li>
+          <NavLink
+            to='/my-orders'
+            className={({ isActive }) => isActive ? activeStyle : undefined}>          
+            My Orders
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to='/my-account'
+            className={({ isActive }) => isActive ? activeStyle : undefined}>
+              My Account
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to='/sign-in'
+            className={({ isActive }) => isActive ? activeStyle : undefined}
+            onClick={() => handleSignOut()}>
+              Sign out
+          </NavLink>
+        </li>
+        <li className='flex items-center'>
+          <ShoppingBagIcon className='h-6 w-6 text-black'></ShoppingBagIcon>
+          <div>{context.cartProducts.length}</div>
+        </li>
+      </>
+    )
+  }
+}
+  
+    return (
     <nav className='flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light'>
       <ul className='flex items-center gap-3'>
         <li className='font-semibold text-lg'>
@@ -77,36 +137,7 @@ const Navbar = () => {
         </li>
       </ul>
       <ul className='flex items-center gap-3'>
-        <li className='text-black/60'>
-          teff@platzi.com
-        </li>
-        <li>
-          <NavLink
-            to='/my-orders'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            My Orders
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/my-account'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            My Account
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/sing-in'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            Sign In
-          </NavLink>
-        </li>
+        {renderView()}
         <li className='flex items-center'>
           <ShoppingBagIcon className='h-6 w-6 text-black'></ShoppingBagIcon>
           <div>{context.cartProducts.length}</div>
