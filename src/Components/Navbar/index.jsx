@@ -23,10 +23,10 @@ const Navbar = () => {
       return ( 
         <li>
           <NavLink
-            to='/sing-in'
+            to='/sign-in'
             className={({ isActive }) => isActive ? activeStyle : undefined}
             onClick={() => handleSignOut()}>
-            Sign In
+            Sign out
           </NavLink>
         </li>
       )
@@ -58,10 +58,7 @@ const Navbar = () => {
               Sign out
           </NavLink>
         </li>
-        <li className='flex items-center'>
-          <ShoppingBagIcon className='h-6 w-6 text-black'></ShoppingBagIcon>
-          <div>{context.cartProducts.length}</div>
-        </li>
+       
       </>
     )
   }
