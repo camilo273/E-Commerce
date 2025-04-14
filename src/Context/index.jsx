@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from 'react'
 
 export const ShoppingCartContext = createContext()
 
-export const initializeLocalStorage = () => { 
+export const initializeLocalStorage = () => {
   const accountInLocalStorage = localStorage.getItem('account')
   const signOutInLocalStorage = localStorage.getItem('sign-out')
   let parsedAccount
@@ -27,8 +27,8 @@ export const ShoppingCartProvider = ({children}) => {
   // My account
   const [account, setAccount] = useState({})
 
-  //Sign out
-  const [ signOut, setSignOut] = useState(false)
+  // Sign out
+  const [signOut, setSignOut] = useState(false)
 
   // Shopping Cart · Increment quantity
   const [count, setCount] = useState(0)
@@ -133,4 +133,3 @@ export const ShoppingCartProvider = ({children}) => {
     </ShoppingCartContext.Provider>
   )
 }
-
